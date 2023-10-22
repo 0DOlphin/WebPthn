@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.1">
+    <title>Ukraine</title>
+</head>
+<body>
+    <form action="cgi-bin/process_form.py" method="post">
+        <h1>Ivanov Dmytro</h1>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br><br>
+
+        <label>Gender:</label><br>
+        <input type="radio" id="male" name="gender" value="male">
+        <label for="male">Male</label><br>
+
+        <input type="radio" id="female" name="gender" value="female">
+        <label for="female">Female</label><br><br>
+
+        <label>Favorite genre of music:</label><br>
+        <input type="checkbox" id="rock" name="music" value="rock">
+        <label for="rock">Rock</label><br>
+
+        <input type="checkbox" id="pop" name="music" value="pop">
+        <label for="pop">Pop</label><br>
+
+        <input type="checkbox" id="Rap" name="music" value="rap">
+        <label for="rap">Rap</label><br><br>
+
+        <label for="kind">Favorite kind of Rock:</label>
+        <select id="kind" name="kind">
+            <option value="rocknroll">Rocknroll</option>
+            <option value="rockabilly">Rockabilly</option>
+            <option value="blues">Blues</option>
+            <option value="jazz">Jazz</option>
+        </select><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
