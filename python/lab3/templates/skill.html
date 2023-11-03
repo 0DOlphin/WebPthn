@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}{{ skill.capitalize() }}{% endblock %}
+{% block content %}
+    <div class="card mb-3 text-center mt-5">
+        <h3 class="card-header">{{ skill.capitalize() }}</h3>
+        <img 
+            class="card-img-top " 
+            src="{{url_for('static', filename='images/{}.svg'.format(skill))}}"
+            style="width: 5rem; align-self: center;" 
+            alt="{{ skill.capitalize() }}"
+        >
+    </div>
+{% endblock %}
