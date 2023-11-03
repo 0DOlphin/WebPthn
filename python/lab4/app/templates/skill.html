@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}{{ skill.capitalize() }}{% endblock %}
+{% block content %}
+    <div class="card mb-3 text-center mt-5">
+        <h3 class="card-header">{{ skill.capitalize() }}</h3>
+        <img 
+            class="card-img-top " 
+            src="{{url_for('static', filename='images/{}.svg'.format(skill))}}"
+            style="width: 5rem; align-self: center;" 
+            alt="{{ skill.capitalize() }}"
+        >
+    </div>
+    <div id="chart"></div>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script>
+        var data = [
+            { value: 40, label: "MySQL" },
+            { value: 20, label: "C++" },
+            { value: 20, label: "Python" },
+            { value: 20, label: "Java" }
+        ];
+
+        var width = 400;
+        var height = 400;
+        var radius = Math.min(width, height) / 2;
+
+        var color = d3.scaleOrdinal()
+            .range(["#007bff", "#28a745", "#dc3545", "#dc9515"]);
+
+        var svg = d3.select("#chart")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+        var arc = d3.arc()
+            .innerRadius(0)
+            .outerRadius(radius);
+
+        var pie = d3.pie()
+            .value(function(d) { return d.value; });
+
+        var arcs = svg.selectAll("arc")
+            .data(pie(data))
+            .enter()
+            .append("g");
+
+        arcs.append("path")
+            .attr("d", arc)
+            .attr("fill", function(d, i) {
+                return color(i);
+            });
+
+        arcs.append("text")
+            .attr("transform", function(d) {
+                var pos = arc.centroid(d);
+                pos[0] *= 1.5;
+                pos[1] *= 1.5;
+                return "translate(" + pos + ")";
+            })
+            .attr("text-anchor", "middle")
+            .attr("fill", "white")
+            .text(function(d) {
+                return d.data.label + " (" + d.data.value + ")";
+            });
+
+    </script>
+
+{% endblock %}
