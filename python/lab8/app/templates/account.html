@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% from "_render-field.html" import render_field %}
+{% block title %}Account{% endblock %}
+{% block content %}
+    <div class="text-center" style="max-width: 500px; margin: 150px auto 0;">
+        <img src="{{url_for('static', filename='images/'+current_user.image_file) }}" width="150px">
+        <div class="user_info mt-3">
+            <p>
+                <span class="text-info">ID:</span>
+                 {{current_user.id}}
+            </p>
+            <p>
+                <span class="text-info"> Username:</span>
+                {{current_user.username}}
+            </p>
+            <p>
+                <span class="text-info"> Email:</span>
+                {{current_user.email}}
+            </p>
+            <p>
+                <button type="button" class="col-auto btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Change password
+                </button>
+            </p>
+        </div>
+
+    </div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Change password form</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="{{url_for('change_password')}}" method="POST">
+            {{ form.csrf_token }}
+            <div class="form-group">
+              {{ render_field(form.old_password, class="form-control") }}
+            </div>
+            <div class="form-group">
+              {{ render_field(form.new_password, class="form-control") }}
+            </div>
+            {{ render_field(form.submit, class="btn btn-primary", style="margin-top: 25px; width: 100%;") }}
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
