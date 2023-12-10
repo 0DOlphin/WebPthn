@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}About me{% endblock %}
+{% block content %}
+    <div class="row align-items-center justify-content-center pt-5">
+        <div class="col-4">
+            <img src="{{ url_for('resume.static', filename='images/me.png') }}" width="250" alt="avatar">
+        </div>
+        <div class="col-6">
+            <h1>Dmytro Ivanov</h1>
+            <p class="text-primary-emphasis">
+            <p>Some text</p>
+            </p>
+        </div>
+    </div>
+{% endblock %}
+{% block footer %}
+    {% include 'footer.html' %}
+{% endblock %}
