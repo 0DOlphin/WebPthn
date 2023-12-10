@@ -1,0 +1,42 @@
+{% macro render_field(field, data) %} 
+
+  {% if field.type == "TextAreaField" %}
+    {% set f = field.process_data(data) %}
+  {% endif %}
+
+  {% if field.errors %}
+    {% set _ = kwargs.__setitem__("class", kwargs["class"] + " is-invalid") %}
+  {% endif %}
+
+  {% if field.type == "BooleanField" %}
+    <div class="form-check">
+      {{ field.label(class="form-check-label") }} 
+      {{ field(**kwargs)| safe }}
+    </div>
+  {% elif field.type == "RadioField"  %}
+    {{ field.label(class="form-check-label mb-1")+":" }} 
+    {% for subfield in field %}
+      <div class="form-check">
+        {{ subfield(**kwargs)| safe }}
+        {{ subfield.label(class="form-check-label") }} 
+      </div>
+    {% endfor %}
+  {% elif field.type == "FileField" %}
+    {{ field.label(class="form-check-label") }} 
+    {{ field(**kwargs)| safe }}
+  {% elif field.type == "SubmitField"  %}
+    {{ field(**kwargs)| safe }}
+  {% else %}
+    <div class="form-floating">
+      {{ field(placeholder="", **kwargs)| safe }}
+      {{ field.label(class="form-label") }}
+    </div>
+  {% endif %}
+ 
+  {% if field.errors %}
+    {% for error in field.errors %}
+      <div class="invalid-feedback" style="display: block;">{{ error }}</div>
+    {% endfor %}
+  {% endif %}
+
+{% endmacro %}
