@@ -1,0 +1,279 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Flask REST"
+    },
+    "servers": [
+        {
+            "url": "/"
+        }
+    ],
+    "paths": {
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Users api"
+                ],
+                "summary": "Returns users",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "default": 1,
+                        "required": false,
+                        "description": "Page number",
+                        "type": "int"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                              "schema": {
+                                "type": "object",
+                                "properties": {
+                                  "users": {
+                                    "type": "array",
+                                    "items": {
+                                      "$ref": "#/components/schemas/User"
+                                    }
+                                  },
+                                  "page": { "type": "number" },
+                                  "pages": { "type": "number"}
+                                }
+                              }
+                            }
+                          }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Users api"
+                ],
+                "summary": "Creates a new user",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateUser"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                          }
+                    }
+                }
+            }
+        },
+        "/api/users/{id}": {
+            "get": {
+                "tags": [
+                    "User api"
+                ],
+                "summary": "Returns user",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "User ID",
+                        "type": "int"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                          }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "User api"
+                ],
+                "summary": "Updates user",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "User ID",
+                        "type": "int"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateUser"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                          }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "User api"
+                ],
+                "summary": "Deletes user",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "User ID",
+                        "type": "int"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                          }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "image": {
+                    "type": "string"
+                  },
+                  "about_me": {
+                    "type": "string"
+                  },
+                  "last_seen": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "posts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/schemas/Post"
+                    }
+                  }
+                }
+            },
+            "CreateUser": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+            },
+            "UpdateUser": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "image": {
+                    "type": "string"
+                  },
+                  "about_me": {
+                    "type": "string"
+                  }
+                }
+            },
+            "Post": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                      },
+                    "title": {
+                        "type": "string"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                    "category": {
+                        "type": "object",
+                        "$ref": "#/components/schemas/Category"
+                    }
+                }
+            },
+            "Category": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
